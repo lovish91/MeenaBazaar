@@ -2,7 +2,6 @@ package com.app.meenabazaar.meenabazaar.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,19 +25,31 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
     List<Article> articles;
     SharedPrefs sharedPrefs;
 
+    public void setItemsListener(onItemsUpdated itemsListener) {
+        this.itemsListener = itemsListener;
+    }
 
-        public CartItem_Adapter(Context context, List<Article> articles) {
-            super(context, R.layout.cart_item, articles);
-            this.context = context;
-            this.articles = articles;
-            sharedPrefs = new SharedPrefs();
-        }
+    private onItemsUpdated itemsListener = null;
+
+    public interface onItemsUpdated {
+        void onItemsUpdate();
+    }
+
+
+    public CartItem_Adapter(Context context, List<Article> articles) {
+        super(context, R.layout.cart_item, articles);
+        this.context = context;
+        this.articles = articles;
+        sharedPrefs = new SharedPrefs();
+    }
+
     private class ViewHolder {
         TextView productNameTxt;
         TextView productDescTxt;
         TextView productPriceTxt;
         TextView article_pp;
-        }
+    }
+
     @Override
     public int getCount() {
         return articles.size();
@@ -78,18 +89,18 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
         Article article = (Article) getItem(position);
         holder.productNameTxt.setText(article.getArticleNo());
         holder.productDescTxt.setText(article.getDescription());
-        holder.productPriceTxt.setText(article.getMrp() );
+        holder.productPriceTxt.setText(article.getMrp());
         holder.article_pp.setText(article.getPurchasePrise());
         //Log.i(TAG, "onPostExecute" + article.getArticleNo() + article.getDescription() + article.getPurchasePrise()+article.getPurchasePrise());
 
 		/*If a product exists in shared preferences then set heart_red drawable
-		 * and set a tag*/
+         * and set a tag*/
         //if (checkFavoriteItem(article_detail)) {
-            //holder.article_pp.setImageResource(R.drawable.heart_red);
-          //  holder.article_pp.setTag("red");
+        //holder.article_pp.setImageResource(R.drawable.heart_red);
+        //  holder.article_pp.setTag("red");
         //} else {
-           // holder.favoriteImg.setImageResource(R.drawable.heart_grey);
-          //  holder.article_pp.setTag("grey");
+        // holder.favoriteImg.setImageResource(R.drawable.heart_grey);
+        //  holder.article_pp.setTag("grey");
         //}
 
         return convertView;
@@ -114,6 +125,7 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
     public void add(Article article_detail) {
         super.add(article_detail);
         articles.add(article_detail);
+        notifyUpdate();
         notifyDataSetChanged();
     }
 
@@ -121,6 +133,13 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
     public void remove(Article article_detail) {
         super.remove(article_detail);
         articles.remove(article_detail);
+        notifyUpdate();
         notifyDataSetChanged();
     }
+
+    private void notifyUpdate() {
+        if (itemsListener != null) {
+            itemsListener.onItemsUpdate();
+        }
     }
+}
