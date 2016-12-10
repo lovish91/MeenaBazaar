@@ -29,12 +29,14 @@
             android:textSize="20sp"
             />
     </android.support.v7.widget.Toolbar>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
         <Button
+            android:id="@+id/createInvoice"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="Create Invoice"
@@ -46,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="My Cart"
+            android:id="@+id/my_cart"
             android:paddingLeft="70dp"
             android:paddingRight="40dp"
             android:textSize="20sp"
@@ -54,10 +57,12 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:text="My History"
+            android:id="@+id/my_history"
             android:paddingLeft="70dp"
             android:paddingRight="40dp"
             android:textSize="20sp"
             android:drawableLeft="@drawable/ic_assignment_black_24dp" />
+
         <Button
             android:id="@+id/addproduct"
             android:layout_width="match_parent"
