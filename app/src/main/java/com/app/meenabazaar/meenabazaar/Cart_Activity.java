@@ -12,13 +12,14 @@ import com.app.meenabazaar.meenabazaar.Adapter.CartItem_Adapter;
 import com.app.meenabazaar.meenabazaar.model.Article;
 import com.app.meenabazaar.meenabazaar.utils.SharedPrefs;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Cart_Activity extends AppCompatActivity implements CartItem_Adapter.onItemsUpdated {
 
     String TAG = "Response";
     SharedPrefs sharedPrefs;
-    List<Article> articles;
+    ArrayList<Article> articles;
     ListView cartlist_view;
     CartItem_Adapter cartItem_adapter;
     TextView total;
@@ -68,9 +69,10 @@ public class Cart_Activity extends AppCompatActivity implements CartItem_Adapter
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Article article = (Article) parent.getItemAtPosition(position);
                 Toast.makeText(getApplicationContext(), article.toString(), Toast.LENGTH_SHORT).show();
-                sharedPrefs.removeFavorite(getBaseContext(), articles.get(position));
-                sharedPrefs.removeFavorite(getBaseContext(), article);
-                cartItem_adapter.remove(articles.get(position));
+                articles.remove(position);
+                cartItem_adapter.notifyDataSetChanged();
+                onItemsUpdate();
+                sharedPrefs.saveFavorites(getBaseContext(), articles);
             }
         });
     }

@@ -23,7 +23,7 @@ public class SharedPrefs {
     }
 
     // This four methods are used for maintaining favorites.
-    public void saveFavorites(Context context, List<Article> cart_items) {
+    public void saveFavorites(Context context, ArrayList<Article> cart_items) {
         SharedPreferences settings;
         SharedPreferences.Editor editor;
 
@@ -40,17 +40,17 @@ public class SharedPrefs {
     }
 
     public void addFavorite(Context context, Article article) {
-        List<Article> cart_items = getCartItems(context);
-        if (cart_items == null)
+        ArrayList<Article> cart_items = getCartItems(context);
+        if (cart_items == null) {
             cart_items = new ArrayList<Article>();
+        }
         cart_items.add(article);
         saveFavorites(context, cart_items);
     }
 
     public void removeFavorite(Context context, Article article) {
-        List<Article> cart_items = getCartItems(context);
+        ArrayList<Article> cart_items = getCartItems(context);
         if (cart_items != null) {
-                cart_items = new ArrayList<Article>();
             cart_items.remove(article);
             saveFavorites(context, cart_items);
         }
@@ -70,9 +70,10 @@ public class SharedPrefs {
                     Article[].class);
 
             cart_items = Arrays.asList(cartItems);
-            cart_items = new ArrayList<Article>(cart_items);
-        } else
+            cart_items = new ArrayList<>(cart_items);
+        } else {
             return null;
+        }
 
         return (ArrayList<Article>) cart_items;
     }

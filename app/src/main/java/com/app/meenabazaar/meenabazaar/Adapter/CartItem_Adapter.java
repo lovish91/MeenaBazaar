@@ -125,21 +125,6 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
     public void add(Article article_detail) {
         super.add(article_detail);
         articles.add(article_detail);
-        notifyUpdate();
         notifyDataSetChanged();
-    }
-
-    @Override
-    public void remove(Article article_detail) {
-        super.remove(article_detail);
-        articles.remove(article_detail);
-        notifyUpdate();
-        notifyDataSetChanged();
-    }
-
-    private void notifyUpdate() {
-        if (itemsListener != null) {
-            itemsListener.onItemsUpdate();
-        }
     }
 }

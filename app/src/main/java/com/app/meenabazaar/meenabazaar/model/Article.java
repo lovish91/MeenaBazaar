@@ -26,23 +26,19 @@ public class Article {
         this.Msp = Msp;
         this.Mrp = Mrp;
         this.PurchasePrise = PurchasePrise;
-
     }
 
-    @Override
     public int hashCode() {
-        final int prime = 31;
-        int hash = 1;
-        hash = hash * prime + (ArticleId==null?0:ArticleId.hashCode());
-        hash = hash * prime + (ArticleNo == null?0:ArticleNo.hashCode());
-        hash = hash * prime + (Quantity==null?0:Quantity.hashCode());
-        hash = hash * prime + (Description == null?0:Description.hashCode());
-        hash = hash * prime + (Msp==null?0:Msp.hashCode());
-        hash = hash * prime + (Mrp == null?0:Mrp.hashCode());
-        hash = hash * prime + (PurchasePrise==null?0:PurchasePrise.hashCode());
-        //result = prime * result + id;
-        return hash;
+        int result = ArticleId.hashCode();
+        result = 31 * result + ArticleNo.hashCode();
+        result = 31 * result + Quantity.hashCode();
+        result = 31 * result + Description.hashCode();
+        result = 31 * result + Msp.hashCode();
+        result = 31 * result + Mrp.hashCode();
+        result = 31 * result + PurchasePrise.hashCode();
+        return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
