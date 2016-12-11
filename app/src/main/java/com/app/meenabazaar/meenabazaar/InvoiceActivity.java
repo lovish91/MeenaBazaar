@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.app.meenabazaar.meenabazaar.model.Article_Model;
+import com.app.meenabazaar.meenabazaar.model.ArticleModel;
 import com.app.meenabazaar.meenabazaar.model.UserDetail;
 
 import org.ksoap2.SoapEnvelope;
@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Invoice_Activity extends AppCompatActivity {
+public class InvoiceActivity extends AppCompatActivity {
 
     String TAG = "Response";
     String article;
@@ -73,16 +73,16 @@ public class Invoice_Activity extends AppCompatActivity {
 
     }
 
-    private class AsyncCallWS extends AsyncTask<String, Void, List<Article_Model>> {
+    private class AsyncCallWS extends AsyncTask<String, Void, List<ArticleModel>> {
 
 
         @Override
-        protected ArrayList<Article_Model> doInBackground(String... params) {
+        protected ArrayList<ArticleModel> doInBackground(String... params) {
             Log.i(TAG, "doInBackground");
             // login();
 
             SoapObject x_deals;
-            List<Article_Model> artclelist = new ArrayList<Article_Model>();
+            List<ArticleModel> artclelist = new ArrayList<ArticleModel>();
                 artclelist.clear();
 
             try {
@@ -112,7 +112,7 @@ public class Invoice_Activity extends AppCompatActivity {
                     String ArticleNo = x_deals.getProperty("ArticleNo").toString();
                     String ExtDescription = x_deals.getProperty("ExtDescription").toString();
 
-                   Article_Model xyz = new Article_Model(ArticleNo,ExtDescription);
+                   ArticleModel xyz = new ArticleModel(ArticleNo,ExtDescription);
 
                     artclelist.add(xyz);
 
@@ -136,7 +136,7 @@ public class Invoice_Activity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<Article_Model> result) {
+        protected void onPostExecute(List<ArticleModel> result) {
 //           Log.i(TAG,Integer.toString(result.size()));
            // NewAdapter abc = new NewAdapter(getApplication(),result);
             //BookAutoCompleteAdapter bookAutoCompleteAdapter = new BookAutoCompleteAdapter(getApplicationContext(),result);

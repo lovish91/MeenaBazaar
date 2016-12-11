@@ -17,10 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".AddProduct_activity" />
-        <activity android:name=".Cart_Activity" />
-        <activity android:name=".Invoice_Activity" />
-        <activity android:name=".Article_Activity"></activity>
+        <activity android:name=".AddProductActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".InvoiceActivity" />
+        <activity android:name=".ArticleActivity"></activity>
     </application>
 
 </manifest>

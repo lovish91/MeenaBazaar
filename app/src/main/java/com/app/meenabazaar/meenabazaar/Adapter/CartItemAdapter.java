@@ -18,7 +18,7 @@ import java.util.List;
  * Created by lovishbajaj on 09/12/16.
  */
 
-public class CartItem_Adapter extends ArrayAdapter<Article> {
+public class CartItemAdapter extends ArrayAdapter<Article> {
     String TAG = "Response";
 
     private Context context;
@@ -36,7 +36,7 @@ public class CartItem_Adapter extends ArrayAdapter<Article> {
     }
 
 
-    public CartItem_Adapter(Context context, List<Article> articles) {
+    public CartItemAdapter(Context context, List<Article> articles) {
         super(context, R.layout.cart_item, articles);
         this.context = context;
         this.articles = articles;

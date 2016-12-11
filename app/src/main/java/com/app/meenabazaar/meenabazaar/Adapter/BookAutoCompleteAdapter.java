@@ -10,7 +10,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.app.meenabazaar.meenabazaar.R;
-import com.app.meenabazaar.meenabazaar.model.Article_Model;
+import com.app.meenabazaar.meenabazaar.model.ArticleModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +23,9 @@ public class BookAutoCompleteAdapter extends BaseAdapter implements Filterable {
 
     private static final int MAX_RESULTS = 10;
     private Context mContext;
-    private List<Article_Model> resultList = new ArrayList<Article_Model>();
+    private List<ArticleModel> resultList = new ArrayList<ArticleModel>();
 
-    public BookAutoCompleteAdapter(Context context,ArrayList<Article_Model> re) {
+    public BookAutoCompleteAdapter(Context context,ArrayList<ArticleModel> re) {
         mContext = context;
     }
 
@@ -35,7 +35,7 @@ public class BookAutoCompleteAdapter extends BaseAdapter implements Filterable {
     }
 
     @Override
-    public Article_Model getItem(int index) {
+    public ArticleModel getItem(int index) {
         return resultList.get(index);
     }
 
@@ -75,7 +75,7 @@ public class BookAutoCompleteAdapter extends BaseAdapter implements Filterable {
             @Override
             protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
                 if (results != null && results.count > 0) {
-                    resultList = (List<Article_Model>) results.values;
+                    resultList = (List<ArticleModel>) results.values;
                     notifyDataSetChanged();
                 } else {
                     notifyDataSetInvalidated();

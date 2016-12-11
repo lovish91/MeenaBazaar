@@ -25,21 +25,21 @@ public class MainActivity extends AppCompatActivity {
         my_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(),Cart_Activity.class);
+                Intent i = new Intent(getBaseContext(),CartActivity.class);
                 startActivity(i);
             }
         });
         newProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), Invoice_Activity.class);
+                Intent i = new Intent(getBaseContext(), InvoiceActivity.class);
                 startActivity(i);
             }
         });
         createInvoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(), Article_Activity.class);
+                Intent i = new Intent(getBaseContext(), ArticleActivity.class);
                 startActivity(i);
             }
         });

@@ -20,7 +20,7 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class Article_Activity extends AppCompatActivity {
+public class ArticleActivity extends AppCompatActivity {
 
     String TAG = "Response";
     String url="http://182.18.174.48/zordererpapi/ErpService.svc/basic";
@@ -125,7 +125,7 @@ public class Article_Activity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog = new ProgressDialog(Article_Activity.this);
+            progressDialog = new ProgressDialog(ArticleActivity.this);
             progressDialog.setCancelable(false);
             progressDialog.setProgressStyle(progressDialog.STYLE_SPINNER);
             progressDialog.show();
@@ -141,7 +141,7 @@ public class Article_Activity extends AppCompatActivity {
             article_purprice.setText( getResources().getString(R.string.Rs)+ ArticlePurPrice);
             String uri= "http://182.18.174.48/image/"+"WOW-821-SPC-GGT-60GM"+".jpg";
             progressDialog.dismiss();
-            Picasso.with(Article_Activity.this)
+            Picasso.with(ArticleActivity.this)
                     .load(uri)
                         //.resize(50,50)
                     .error(R.drawable.broken_link)

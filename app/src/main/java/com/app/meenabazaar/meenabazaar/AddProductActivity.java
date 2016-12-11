@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
-public class AddProduct_activity extends AppCompatActivity {
+public class AddProductActivity extends AppCompatActivity {
 
     Toolbar mtoolbar;
     @Override

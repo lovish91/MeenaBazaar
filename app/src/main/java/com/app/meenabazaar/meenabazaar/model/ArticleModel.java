@@ -4,11 +4,11 @@ package com.app.meenabazaar.meenabazaar.model;
  * Created by lovishbajaj on 02/12/16.
  */
 
-public class Article_Model {
+public class ArticleModel {
     private String articleNo;
     private String pcs;
 
-    public Article_Model(String ArticleNo , String ExtDescription){
+    public ArticleModel(String ArticleNo , String ExtDescription){
         this.articleNo = ArticleNo;
         this.pcs = ExtDescription;
     }

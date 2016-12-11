@@ -8,20 +8,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.meenabazaar.meenabazaar.Adapter.CartItem_Adapter;
+import com.app.meenabazaar.meenabazaar.Adapter.CartItemAdapter;
 import com.app.meenabazaar.meenabazaar.model.Article;
 import com.app.meenabazaar.meenabazaar.utils.SharedPrefs;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cart_Activity extends AppCompatActivity implements CartItem_Adapter.onItemsUpdated {
+public class CartActivity extends AppCompatActivity implements CartItemAdapter.onItemsUpdated {
 
     String TAG = "Response";
     SharedPrefs sharedPrefs;
     ArrayList<Article> articles;
     ListView cartlist_view;
-    CartItem_Adapter cartItem_adapter;
+    CartItemAdapter cartItem_adapter;
     TextView total;
     double j;
 
@@ -57,7 +57,7 @@ public class Cart_Activity extends AppCompatActivity implements CartItem_Adapter
             //Toast.makeText(getApplicationContext(), i +"",Toast.LENGTH_SHORT).show();
         }
         //NewAdapter newAdapter = new NewAdapter(getApplicationContext(),article_details);
-        cartItem_adapter = new CartItem_Adapter(getBaseContext(), articles);
+        cartItem_adapter = new CartItemAdapter(getBaseContext(), articles);
         cartItem_adapter.setItemsListener(this);
         cartlist_view.setAdapter(cartItem_adapter);
         double totalValue = getGrandTotal(articles);
