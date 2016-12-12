@@ -127,7 +127,6 @@
             android:id="@+id/gotocart"
             android:text="Go To Cart"
             android:textColor="@color/my_awesome_color"
-            android:background="@color/theme_divider"
             android:textSize="15sp"
             android:textStyle="normal|bold" />
         <Button
@@ -141,7 +140,8 @@
             android:textSize="15sp"
             android:textColor="@color/my_awesome_color"
             android:visibility="visible"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:elevation="24dp" />
     </LinearLayout>
 
 </RelativeLayout>

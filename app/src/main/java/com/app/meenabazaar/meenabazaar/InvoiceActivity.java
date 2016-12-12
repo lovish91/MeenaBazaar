@@ -1,11 +1,15 @@
 package com.app.meenabazaar.meenabazaar;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.speech.RecognizerIntent;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 
 import com.app.meenabazaar.meenabazaar.model.ArticleModel;
 import com.app.meenabazaar.meenabazaar.model.UserDetail;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -45,20 +50,57 @@ public class InvoiceActivity extends AppCompatActivity {
     TextView abcd;
     String Articleno = "ArticleNo";
     String Description = "description";
-     SearchView searchViewAndroidActionBar;
+    SearchView searchViewAndroidActionBar;
     ListView Artic;
+    private MaterialSearchView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invoice);
 
-        mActionBarTool = (Toolbar) findViewById(R.id.toolbar);
+        mActionBarTool = (Toolbar) findViewById(R.id.toolbarers);
         setSupportActionBar(mActionBarTool);
         getSupportActionBar().setTitle("");
-        mActionBarTool.setTitle("");
+        mActionBarTool.setTitle("new");
         abcd = (TextView)  findViewById(R.id.abcd);
-        mActionBarTool.inflateMenu(R.menu.menu);
-        Artic = (ListView) findViewById(R.id.artc);
+        //mActionBarTool.inflateMenu(R.menu.menu);
+        searchView = (MaterialSearchView) findViewById(R.id.search_views);
+        searchView.setVoiceSearch(false);
+        searchView.setCursorDrawable(R.drawable.custom_cursor);
+        //searchView.setSuggestions(getResources().getStringArray(R.array.query_suggestions));
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Snackbar.make(findViewById(R.id.container), "Query: " + query, Snackbar.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.length() > 2) {
+                    article = newText.toString();
+                    //abcd.setText(abc);
+                    AsyncCallWS task = new AsyncCallWS();
+                    //Call execute
+                    task.execute();
+                }
+                //Do some magic
+                return false;
+            }
+        });
+
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+                //Do some magic
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                //Do some magic
+            }
+        });
+
         //Article = (AutoCompleteTextView) findViewById(R.id.search);
         button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -71,24 +113,24 @@ public class InvoiceActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    private class AsyncCallWS extends AsyncTask<String, Void, List<ArticleModel>> {
+    private class AsyncCallWS extends AsyncTask<String, Void, ArrayList<String>> {
 
 
         @Override
-        protected ArrayList<ArticleModel> doInBackground(String... params) {
+        protected ArrayList<String> doInBackground(String... params) {
             Log.i(TAG, "doInBackground");
             // login();
-
-            SoapObject x_deals;
-            List<ArticleModel> artclelist = new ArrayList<ArticleModel>();
+            //SoapObject x_deals;
+            ArrayList<String> artclelist = new ArrayList<String>();
                 artclelist.clear();
 
             try {
                 SoapObject Request = new SoapObject(NAMESPACE, METHOD_NAME);
                 Request.addProperty("searchStr", article);
-                Request.addProperty("rowCount", "5");
+                Request.addProperty("rowCount", "8");
 
 
 
@@ -107,22 +149,29 @@ public class InvoiceActivity extends AppCompatActivity {
                 SoapObject t_deals = (SoapObject) s_deals.getProperty("NewDataSet");
                 int co = t_deals.getPropertyCount();
 
-                for (int i=0; i <= co; i++ ){
-                    x_deals = (SoapObject) t_deals.getProperty("tArticleSearch");
-                    String ArticleNo = x_deals.getProperty("ArticleNo").toString();
-                    String ExtDescription = x_deals.getProperty("ExtDescription").toString();
+                for (int i=0; i < co; i++ ){
+                    Object property = t_deals.getProperty(i);
+                    if (property instanceof SoapObject)
+                    {
+                        //SoapObject x_deals = (SoapObject) t_deals.getProperty("tArticleSearch");
+                        SoapObject x_deals = (SoapObject) property;
+                        String ArticleNo = x_deals.getProperty("ArticleNo").toString();
+                        String ExtDescription = x_deals.getProperty("ExtDescription").toString();
+                        //vector.addElement(ArticleNo);
+                        //vector.addElement(ExtDescription);
+                        //ArticleModel xyz = new ArticleModel(ArticleNo,ExtDescription);
 
-                   ArticleModel xyz = new ArticleModel(ArticleNo,ExtDescription);
+                        artclelist.add(ArticleNo);
 
-                    artclelist.add(xyz);
+                        Log.i(TAG, co + ArticleNo.toString());
+                        //Log.i(TAG, t_deals.toString());
+                    }
 
-                    // Log.i(TAG,co + t_deals.toString());
-                    Log.i(TAG, ArticleNo +   ExtDescription);
                 }
-
+               // Log.i(TAG, x_deals.toString());
                 Log.i(TAG,Integer.toString(artclelist.size()));
 
-            return null;
+            return artclelist;
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -136,12 +185,15 @@ public class InvoiceActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<ArticleModel> result) {
-//           Log.i(TAG,Integer.toString(result.size()));
+        protected void onPostExecute(ArrayList<String> artclelist) {
+           Log.i(TAG,Integer.toString(artclelist.size()));
+
            // NewAdapter abc = new NewAdapter(getApplication(),result);
             //BookAutoCompleteAdapter bookAutoCompleteAdapter = new BookAutoCompleteAdapter(getApplicationContext(),result);
             //Artic.setAdapter(abc);
             //abc.notifyDataSetChanged();
+            String[] stringArray = artclelist.toArray(new String[0]);
+            searchView.setSuggestions(stringArray);
             Log.i(TAG, "onPostExecute");
 
         }
@@ -155,35 +207,40 @@ public class InvoiceActivity extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
             Log.i(TAG, "onProgressUpdate");
         }
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem searchViewItem = menu.findItem(R.id.menu_search);
-         searchViewAndroidActionBar = (SearchView) MenuItemCompat.getActionView(searchViewItem);
-        searchViewAndroidActionBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                searchViewAndroidActionBar.clearFocus();
-                return true;
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MaterialSearchView.REQUEST_VOICE && resultCode == RESULT_OK) {
+            ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (matches != null && matches.size() > 0) {
+                String searchWrd = matches.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    searchView.setQuery(searchWrd, false);
+                }
             }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(newText.length() > 2){
-                    article = newText.toString();
-                    //abcd.setText(abc);
-                    AsyncCallWS task = new AsyncCallWS();
-                    //Call execute
-                    task.execute();
-                }
-                return false;
-            }
-        });
-        return super.onCreateOptionsMenu(menu);
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
 }

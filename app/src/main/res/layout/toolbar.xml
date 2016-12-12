@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:theme="@style/MyApp.ActionBarTheme">
+        android:minHeight="?attr/actionBarSize">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

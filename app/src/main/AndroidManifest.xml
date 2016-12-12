@@ -19,8 +19,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".CartActivity" />
-        <activity android:name=".InvoiceActivity" />
-        <activity android:name=".ArticleActivity"></activity>
+        <activity android:name=".InvoiceActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ArticleActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
